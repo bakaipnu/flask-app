@@ -1,7 +1,10 @@
 from flask import Flask
 
 
-app = Flask(__name__)
+from utils.config import get
+
+
+app = Flask(get("FLASK_APP"))
 
 
 @app.route("/")
@@ -10,4 +13,5 @@ def main():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    debug_value = get("FLASK_DEBUG", int) or False
+    app.run(debug=debug_value, port=get("FLASK_PORT"))
