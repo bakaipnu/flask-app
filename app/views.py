@@ -1,10 +1,6 @@
-from flask import Flask, render_template
+from flask import render_template
 
-
-from utils.config import get
-
-
-app = Flask(get("FLASK_APP"))
+from . import app
 
 
 @app.route("/")
@@ -20,8 +16,3 @@ def resume():
 @app.route('/contact')
 def contact():
     return render_template('contacts.html', page_title="Контакти")
-
-
-if __name__ == "__main__":
-    debug_value = get("FLASK_DEBUG", int) or False
-    app.run(debug=debug_value, port=get("FLASK_PORT"))
