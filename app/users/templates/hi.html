@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hello =) </h1>
+
+    {% if name %}
+        <p style="color: green;">Ім'я: {{ name }}</p>
+    {% else %}
+        <p style="color: red;">Name not provided</p>
+    {% endif %}
+
+    {% if age is not none %}
+        <p style="color: green;">Вік: {{ age }}</p>
+    {% else %}
+        <p style="color: red;">Age not provided</p>
+    {% endif %}
+{% endblock %}
