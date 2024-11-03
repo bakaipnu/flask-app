@@ -1,4 +1,12 @@
-from flask import render_template, request, url_for, redirect, flash, session
+from datetime import timedelta
+
+from flask import (render_template,
+                   request,
+                   url_for,
+                   redirect,
+                   flash,
+                   session,
+                   make_response)
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from . import users_blueprint
@@ -40,13 +48,48 @@ def login():
     return render_template("login.html")
 
 
-@users_blueprint.route("/profile")
+@users_blueprint.route("/profile", methods=["GET", "POST"])
 def profile():
-    username = session.get("user")
-    if not username:
+    if "user" not in session:
         flash("You need to log in to view this page.", "warning")
         return redirect(url_for("users.login"))
-    return render_template("profile.html", username=username)
+
+    if request.method == "POST":
+        action = request.form.get("action")
+
+        if action == "add":
+            key = request.form.get("key")
+            value = request.form.get("value")
+            days = request.form.get("days", type=int)
+
+            if key and value and days:
+                response = make_response(redirect(url_for("users.profile")))
+                response.set_cookie(key, value, max_age=timedelta(days=days))
+                flash(f"Cookie '{key}' added successfully!", "success")
+                return response
+            else:
+                flash_message = (
+                        "Please provide a valid key, "
+                        "value and expiration days."
+                )
+                flash(flash_message, "danger")
+        elif action == "delete_key":
+            key = request.form.get("delete_key")
+            response = make_response(redirect(url_for("users.profile")))
+            response.set_cookie(key, "", expires=0)
+            flash(f"Cookie '{key}' deleted successfully!", "success")
+            return response
+
+        elif action == "delete_all":
+            response = make_response(redirect(url_for("users.profile")))
+            for cookie_key in request.cookies.keys():
+                response.set_cookie(cookie_key, "", expires=0)
+            flash("All cookies deleted successfully!", "success")
+            return response
+
+    current_cookies = request.cookies.to_dict()
+    return render_template("profile.html", username=session["user"],
+                           cookies=current_cookies)
 
 
 @users_blueprint.route("/logout", methods=["POST"])
@@ -54,3 +97,15 @@ def logout():
     session.pop("user", None)
     flash("You have benn logged out.", "info")
     return redirect(url_for("users.login"))
+
+
+@users_blueprint.route("/set_color_scheme/<string:scheme>")
+def set_color_scheme(scheme):
+    if scheme not in ["light", "dark"]:
+        flash("Invalid color scheme selected.", "danger")
+        return redirect(url_for("users.profile"))
+
+    response = make_response(redirect(url_for("users.profile")))
+    response.set_cookie("color_scheme", scheme, max_age=timedelta(days=30))
+    flash(f"Color scheme set to {scheme.capitalize()}!", "success")
+    return response
