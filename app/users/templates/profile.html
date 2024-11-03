@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="profile-container">
+    <h2>Вітаємо, {{ username }}!</h2>
+    <p>Ви увійшли до системи.</p>
+    
+    <form action="{{ url_for('users.logout') }}" method="post">
+        <button type="submit" class="logout-button">Вийти</button>
+    </form>
+</div>
+{% endblock %}

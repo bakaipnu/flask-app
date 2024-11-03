@@ -34,7 +34,23 @@ def login():
         if is_username_correct and is_password_correct:
             session["user"] = username
             flash("Login successful!", "success")
-            return redirect(url_for("users.greetings", name=username))
+            return redirect(url_for("users.profile", name=username))
         else:
             flash("Invalid username or password", "danger")
     return render_template("login.html")
+
+
+@users_blueprint.route("/profile")
+def profile():
+    username = session.get("user")
+    if not username:
+        flash("You need to log in to view this page.", "warning")
+        return redirect(url_for("users.login"))
+    return render_template("profile.html", username=username)
+
+
+@users_blueprint.route("/logout", methods=["POST"])
+def logout():
+    session.pop("user", None)
+    flash("You have benn logged out.", "info")
+    return redirect(url_for("users.login"))

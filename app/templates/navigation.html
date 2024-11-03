@@ -1,5 +1,13 @@
 <nav>
     <a href="/">Головна</a>
-    <a href="/resume">Резюме</a>
-    <a href="/contact">Контакти</a>
+    <a href="{{ url_for('resume') }}">Резюме</a>
+    <a href="{{ url_for('contact') }}">Контакти</a>
+
+    {% if session.get("user") %}
+        <a href="{{ url_for('users.profile') }}">Профіль</a>
+        <a href="{{ url_for('users.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Вийти</a>
+        <form id="logout-form" action="{{ url_for('users.logout') }}" method="POST" style="display: none;"></form>
+    {% else %}
+        <a href="{{ url_for('users.login') }}">Вхід</a>
+    {% endif %}
 </nav>

@@ -1,9 +1,16 @@
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
     margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
 }
+
 header, footer {
     text-align: center;
     margin-bottom: 30px;
@@ -16,4 +23,82 @@ nav a {
     margin: 0 15px;
     text-decoration: none;
     color: #333;
+}
+
+h1, h2 {
+    margin: 0;
+    padding: 0;
+}
+
+/* Flash Messages */
+.flash-messages {
+    margin-top: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.flash-message {
+    padding: 10px;
+    margin: 10px auto;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash-message.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.flash-message.warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Profile and Login Containers */
+.profile-container, .login-container {
+    background: #fff;
+    padding: 2rem;
+    margin-top: 20px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.logout-button, .login-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+
+.logout-button:hover, .login-button:hover {
+    background-color: #45a049;
+}
+
+/* Input Styles */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    display: inline-block;
+    font-size: 1rem;
 }
