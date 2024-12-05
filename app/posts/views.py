@@ -1,3 +1,6 @@
+import os
+import json
+
 from flask import flash, redirect, render_template, url_for, session
 
 from . import posts_blueprint
@@ -32,3 +35,16 @@ def add_post():
         flash("Post added successfully!", "success")
         return redirect(url_for("posts.add_post"))
     return render_template("add_post.html", form=form)
+
+
+@posts_blueprint.route("/", methods=["GET"])
+def show_posts():
+    try:
+        with open(os.path.join(os.path.dirname(__file__), 'data', 'posts.json'), "r", encoding="utf-8") as file:
+            posts = json.load(file)
+    except FileNotFoundError:
+        posts = []
+    except json.JSONDecodeError:
+        posts = []
+
+    return render_template("posts.html", posts=posts)
