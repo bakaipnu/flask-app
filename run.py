@@ -1,7 +1,7 @@
-from app import app
+from app import create_app
 
 from utils.config import get
 
 
 if __name__ == "__main__":
-    app.run(port=get("FLASK_PORT"))
+    create_app().run(port=get("FLASK_PORT"))
