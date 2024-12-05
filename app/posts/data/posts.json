@@ -1,0 +1,20 @@
+[
+  {
+    "id": 0,
+    "title": "rer",
+    "content": "rwer",
+    "category": "tech",
+    "is_active": true,
+    "publication_date": "0200-02-02",
+    "author": "admin"
+  },
+  {
+    "id": 1,
+    "title": "we",
+    "content": "2323",
+    "category": "lifestyle",
+    "is_active": true,
+    "publication_date": "0300-03-03",
+    "author": "unauthorized"
+  }
+]

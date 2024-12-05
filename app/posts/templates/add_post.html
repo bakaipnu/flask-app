@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "form_macros.html" import render_field %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Add New Post</h2>
+    <div class="card shadow-sm p-4 bg-light">
+      <form method="POST" action="" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.title.label(class="form-label") }}
+          {{ form.title }}
+        </div>
+        <div class="mb-3">
+          {{ form.content.label(class="form-label") }}
+          {{ form.content }}
+        </div>
+        {{ render_field(form.is_active) }}
+        {{ render_field(form.publish_date) }}
+        {{ render_field(form.category) }}
+        <div class="d-grid">
+          {{ form.submit }}
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

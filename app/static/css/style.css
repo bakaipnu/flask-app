@@ -30,7 +30,6 @@ h1, h2 {
     padding: 0;
 }
 
-/* Flash Messages */
 .flash-messages {
     margin-top: 20px;
     width: 100%;
@@ -61,7 +60,6 @@ h1, h2 {
     color: #856404;
 }
 
-/* Profile and Login Containers */
 .profile-container, .login-container {
     background: #fff;
     padding: 2rem;
@@ -88,7 +86,6 @@ h1, h2 {
     background-color: #45a049;
 }
 
-/* Input Styles */
 input[type="text"], input[type="password"] {
     width: 100%;
     padding: 10px;
@@ -103,7 +100,6 @@ button {
     font-size: 1rem;
 }
 
-/* Profile Page Specific Styles */
 .profile-container {
     background: #fff;
     padding: 2rem;
@@ -173,7 +169,6 @@ form {
     background-color: #e0e0e0;
 }
 
-/* Dark Theme Styles */
 .dark-theme {
     background-color: #333;
     color: #f0f0f0;
@@ -215,4 +210,47 @@ table, th, td {
 th {
     background-color: #f2f2f2;
     text-align: left;
+}
+
+.container {
+  max-width: 600px;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.form-control {
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+}
+
+.form-label {
+  font-weight: bold;
+  color: #495057;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.d-grid {
+  display: grid;
+  grid-template-columns: 1fr;
 }
