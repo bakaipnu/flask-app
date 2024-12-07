@@ -23,7 +23,6 @@ def greetings(name):
 def admin():
     to_url = url_for("users.greetings", name="administrator",
                      age=19, _external=True)
-    print(to_url)
     return redirect(to_url)
 
 

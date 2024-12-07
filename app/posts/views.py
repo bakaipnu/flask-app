@@ -10,7 +10,6 @@ def add_post():
     form = PostForm()
 
     if form.validate_on_submit():
-        print("valid")
         username = session.get("user", "unauthorized")
 
         new_post = Post(
@@ -27,8 +26,6 @@ def add_post():
 
         flash("Post added successfully!", "success")
         return redirect(url_for("posts.add_post"))
-    else:
-        print("Form errors:", form.errors)
 
     return render_template("add_post.html", form=form)
 
