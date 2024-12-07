@@ -10,14 +10,21 @@
     {% for post in posts %}
     <div class="post-card">
         <img src="{{ url_for('posts.static', filename='img/default.png') }}" alt="Зображення для {{ post.title }}" class="post-image">
-        <h3>{{ post.title }}</h3>
+        <h3><a href="{{ url_for('posts.view_post', id=post.id) }}">{{ post.title }}</a></h3>
         <p><strong>Категорія:</strong> {{ post.category }}</p>
         <p><strong>Автор:</strong> {{ post.author }}</p>
-        <p><strong>Дата публікації:</strong> {{ post.publication_date }}</p>
-        <p>{{ post.content }}</p>
+        <p><strong>Дата публікації:</strong> {{ post.posted.strftime('%Y-%m-%d %H:%M') }}</p>
+        <p>{{ post.content[:100] }}...</p>
+        
         {% if not post.is_active %}
         <p class="inactive">Цей пост не активний</p>
         {% endif %}
+
+        <a href="{{ url_for('posts.edit_post', id=post.id) }}" class="btn btn-warning">Edit</a>
+
+        <form action="{{ url_for('posts.delete_post', id=post.id) }}" method="POST" style="display:inline;">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
     </div>
     {% else %}
     <p>Поки що немає постів.</p>
