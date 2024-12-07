@@ -15,9 +15,21 @@
           {{ form.content.label(class="form-label") }}
           {{ form.content }}
         </div>
+
+        <div class="mb-3">
+          {{ form.author.label(class="form-label") }}
+          {{ form.author }}
+        </div>
+
+        <div class="mb-3">
+          {{ form.tags.label(class="form-label") }}
+          {{ form.tags }}
+        </div>
+
         {{ render_field(form.is_active) }}
         {{ render_field(form.publish_date) }}
         {{ render_field(form.category) }}
+
         <div class="d-grid">
           {{ form.submit }}
         </div>
