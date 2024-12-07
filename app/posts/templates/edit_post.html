@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('posts.static', filename='css/posts.css') }}">
+{% endblock css %}
+
+{% block content %}
+<h2>Редагувати пост: {{ post.title }}</h2>
+<div class="card shadow-sm p-4 bg-light">
+    <form method="POST" action="" novalidate>
+        {{ form.hidden_tag() }}
+        
+        <div class="mb-3">
+            {{ form.title.label(class="form-label") }}
+            {{ form.title }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.content.label(class="form-label") }}
+            {{ form.content }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.is_active.label(class="form-label") }}
+            {{ form.is_active }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.publish_date.label(class="form-label") }}
+            {{ form.publish_date }}
+        </div>
+
+        <div class="d-grid">
+            {{ form.submit }}
+        </div>
+    </form>
+</div>
+{% endblock content %}
