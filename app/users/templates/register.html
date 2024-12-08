@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{ url_for('users.static', filename='css/style.css') }}">
+{% endblock css %}
+
+{% block content %}
+<h1>Реєстрація</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.username.label }}<br>
+        {{ form.username(size=20) }}<br>
+        {% for error in form.username.errors %}
+            <small>{{ error }}</small>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.email.label }}<br>
+        {{ form.email(size=20) }}<br>
+        {% for error in form.email.errors %}
+            <small>{{ error }}</small>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.password.label }}<br>
+        {{ form.password(size=20) }}<br>
+        {% for error in form.password.errors %}
+            <small>{{ error }}</small>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.confirm_password.label }}<br>
+        {{ form.confirm_password(size=20) }}<br>
+        {% for error in form.confirm_password.errors %}
+            <small>{{ error }}</small>
+        {% endfor %}
+    </div>
+    <div>
+        {{ form.submit() }}
+    </div>
+</form>
+{% endblock content %}

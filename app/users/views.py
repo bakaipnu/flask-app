@@ -7,9 +7,11 @@ from flask import (render_template,
                    flash,
                    session,
                    make_response)
-from werkzeug.security import check_password_hash, generate_password_hash
 
+from app import bcrypt, db
 from . import users_blueprint
+from .forms import RegistrationForm
+from .models import User
 
 
 @users_blueprint.route('/hi/<string:name>')
@@ -28,20 +30,18 @@ def admin():
 
 @users_blueprint.route("/login", methods=["GET", "POST"])
 def login():
-    correct_username = "admin"
-    correct_password = generate_password_hash("password123")
-
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
 
-        is_username_correct = username == correct_username
-        is_password_correct = check_password_hash(correct_password, password)
+        user = User.query.filter_by(username=username).first()
 
-        if is_username_correct and is_password_correct:
-            session["user"] = username
+        if user and user.check_password(password):
+            session["username"] = user.username
+            session["email"] = user.email
+
             flash("Login successful!", "success")
-            return redirect(url_for("users.profile", name=username))
+            return redirect(url_for("users.account"))
         else:
             flash("Invalid username or password", "danger")
     return render_template("login.html")
@@ -49,7 +49,7 @@ def login():
 
 @users_blueprint.route("/profile", methods=["GET", "POST"])
 def profile():
-    if "user" not in session:
+    if "username" not in session:
         flash("You need to log in to view this page.", "warning")
         return redirect(url_for("users.login"))
 
@@ -87,13 +87,13 @@ def profile():
             return response
 
     current_cookies = request.cookies.to_dict()
-    return render_template("profile.html", username=session["user"],
+    return render_template("profile.html", username=session["username"],
                            cookies=current_cookies)
 
 
 @users_blueprint.route("/logout", methods=["POST"])
 def logout():
-    session.pop("user", None)
+    session.pop("username", None)
     flash("You have benn logged out.", "info")
     return redirect(url_for("users.login"))
 
@@ -108,3 +108,28 @@ def set_color_scheme(scheme):
     response.set_cookie("color_scheme", scheme, max_age=timedelta(days=30))
     flash(f"Color scheme set to {scheme.capitalize()}!", "success")
     return response
+
+
+@users_blueprint.route("/sign-up", methods=["GET", "POST"])
+def signup():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode("UTF-8")
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+        flash("Your account has benn created! You can now log in.", "success")
+        return redirect(url_for("users.login"))
+    return render_template("register.html", title="Register", form=form)
+
+
+@users_blueprint.route("/account")
+def account():
+    if "username" not in session:
+        flash("You must log in to view this page.", "warning")
+        return redirect(url_for("users.login"))
+
+    username = session.get("username")
+    email = session.get("email")
+
+    return render_template("account.html", username=username, email=email)

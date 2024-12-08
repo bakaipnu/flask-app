@@ -3,7 +3,7 @@
     <a href="{{ url_for('resume') }}">Резюме</a>
     <a href="{{ url_for('contact') }}">Контакти</a>
 
-    {% if session.get("user") %}
+    {% if session.get("username") %}
         <a href="{{ url_for('users.profile') }}">Профіль</a>
         <a href="{{ url_for('users.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Вийти</a>
         <form id="logout-form" action="{{ url_for('users.logout') }}" method="POST" style="display: none;"></form>
